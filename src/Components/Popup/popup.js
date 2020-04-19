@@ -15,6 +15,7 @@ return (
 						 <React.Fragment key={item.name}>
 							<label><b>{item.label}:</b></label>
 							<input type="text" name={item.name} onChange={(e) => props.changed(e)}  /><br/>
+							<div className="errorMsg">{props.errors[item.name]}</div>
 						 </React.Fragment>
 					)})
 				}

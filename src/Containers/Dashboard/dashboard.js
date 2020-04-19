@@ -7,7 +7,7 @@ class Dashboard extends React.Component {
 		super(props)
 		this.state = {
 			showPopup: false,
-			fields: {},
+			fields: {name:'', rate:'', quality:''},
 			errors: {},
 			productList : [
 				{
@@ -50,15 +50,35 @@ class Dashboard extends React.Component {
     // submit / add new product 
 	submitProduct(e) {
 		e.preventDefault();
-		this.displayPopup(false);
 		
+		this.validateForm();
+		if(this.validateForm()) {
+		this.displayPopup(false);
 		var newObj = { id : this.state.productList.length + 1, ...this.state.fields}
 		this.setState( prevState => ({
 		...prevState,						
 		productList: [...prevState.productList,  newObj],
-		fields : {}
+		fields : {},
+		errors: {}
 		}));
+		}
 	}
+	
+	validateForm() {
+		let errors = {};
+		let formIsValid = true;
+		for (var key of Object.keys(this.state.fields)) {
+			if(this.state.fields[key] === '') {
+				   formIsValid = false;
+					errors[key] = "*Please enter " + key;
+			}
+		}
+		this.setState({
+			errors: errors
+		});
+		return formIsValid;
+	}
+	
 
     // show / hide popup
 	displayPopup(show) {  
@@ -84,6 +104,7 @@ class Dashboard extends React.Component {
 						   submitted={this.submitProduct}
 						   fields={this.state.fields}
 						   config={this.state.popConfig}
+						   errors={this.state.errors}
 					/>
 					: null  
 				}
