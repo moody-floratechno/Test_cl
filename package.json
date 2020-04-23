@@ -2,7 +2,7 @@
   "name": "test",
   "version": "0.1.0",
   "private": true,
-  "engines: {
+  "engines": {
    "node" : "10.13.0",
    "npm": "6.4.1"
   },
